@@ -6,19 +6,21 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-    <body class="bg-secondary">
+    <body class="bg-secondary" style="font-size:20pt">
 
-        <div id="talk" class='container col-md-6 border rounded bg-white' style="height: auto;">
+        <div id="talk" class='container col-md-12 border rounded bg-white' style="height: auto; width: 100wv">
             Diga "Oi" para o bot :)
             <div class="row">
-                <div class="mx-auto col-md-6 border fixed-bottom  bg-white">
+                <div class="mx-auto col-md-12 border fixed-bottom  bg-white">
                     <form onsubmit="conversation()">
                         <div class="form-group col-md" style="display:inline;">
                             <div class="input-group">
-                                <input type="text" autofocus class="form-control input-lg" id="texto" placeholder="Mensagem...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-success" type="submit" id="submit"><i class="material-icons" style="font-size:15px">send</i></button>
-                                </span>
+                                <textarea type="text" autofocus class="form-control form-control-lg" id="texto" placeholder="Mensagem..." style="overflow:auto;resize:none"></textarea>
+                                <div class="input-group-btn input-group-append">
+                                    <span class="input-group-text bg-success">
+                                        <button class="btn btn-success form-control-lg" type="submit" id="submit"><i class="material-icons">send</i></button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </form>
