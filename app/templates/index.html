@@ -11,26 +11,24 @@
 
         <div class="container" style="overflow-y: none; height: 100hv">
             <div class="row">
-                <div id="talk" class='col-md-12 border rounded bg-white' style="height: 80hv; width: 100wv; overflow-y: auto;">
+                <div id="talk" class='col-md-12 border rounded bg-white' style="overflow-y: auto;">
                     Diga "Oi" para o bot :)
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 border fixed-bottom">
+                <div class="col-md-12 border">
                     <div class="row">
                         <div class="mx-auto col-md-12 border bg-white">
-                            <form onsubmit="conversation()">
-                                <div class="form-group col-md" style="display:inline;">
-                                    <div class="input-group">
-                                        <textarea type="text" autofocus class="form-control form-control-lg" id="texto" onkeypress="checaTexto(event)" placeholder="Mensagem..." style="overflow:auto;resize:none"></textarea>
-                                        <div class="input-group-btn input-group-append">
-                                            <span class="input-group-text bg-success">
-                                                <button class="btn btn-success form-control-lg" type="submit" id="submit"><i class="material-icons">send</i></button>
-                                            </span>
-                                        </div>
+                            <div class="form-group col-md" style="display:inline;">
+                                <div class="input-group">
+                                    <textarea type="text" autofocus class="form-control form-control-lg" id="texto" onkeypress="checaTexto(event)" placeholder="Mensagem..." style="overflow:auto;resize:none"></textarea>
+                                    <div class="input-group-btn input-group-append">
+                                        <span class="input-group-text bg-success">
+                                            <button class="btn btn-success form-control-lg" onclick="conversation()" id="submit"><i class="material-icons">send</i></button>
+                                        </span>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +36,6 @@
             </div>
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
     </body>
@@ -46,7 +43,6 @@
 
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
 
     function conversation(){
         texto = $('#texto').val()

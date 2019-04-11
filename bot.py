@@ -53,7 +53,12 @@ talk9 = [
 
 talk10 = [
 	'Seu nome',
-	'VAI, Vitor Atificial Intelligence'
+	'VAI, Vitor Artificial Intelligence'
+]
+
+talk11 = [
+	'Boa noite',
+	'Palmeiras não tem mundial!'
 ]
 
 trainer = ListTrainer(bot)
@@ -67,6 +72,7 @@ trainer.train(talk7)
 trainer.train(talk8)
 trainer.train(talk9)
 trainer.train(talk10)
+trainer.train(talk11)
 
 #rand = list(set().union(talk, talk2, talk3, talk4, talk5, talk6, talk7, talk8))
 #trainer.train(random.shuffle(rand))
