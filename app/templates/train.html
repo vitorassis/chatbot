@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bot! | Treinar</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    </head>
+    <body class="bg-secondary" style="font-size:20pt;">
+
+        <div class="container col-md-8 bg-white">
+            <h1>Treinar</h1>
+
+            <div class="row">
+                <div class="col-md-6 border rounded">
+                    <h3>Adicionar conversa de base:</h3>
+                    <h6>Insira uma mensagem por linha</h6>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>
+                                Conversa:
+                                <button id="clear" class="btn btn-primary" onclick="$('#talk').val('')">Limpar caixa</button>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea id="talk" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="save" class="btn btn-success" onclick="trainTalk()">Treinar!</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 border rounded">
+                    <h3>Limpar aprendizado do bot?</h3>
+                    <h6>Essa ação não pode ser desfeita!</h6>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="exclude" class="btn btn-danger" onclick="exclude()">Esquecer</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </body>
+</html>
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+    function trainTalk(){
+        texto = $('#talk').val()
+
+        $.getJSON($SCRIPT_ROOT + '/train_talk', {
+            talk: texto
+        }, function(data) {
+            alert(data.result);
+        });
+        return false;
+    }
+
+    function exclude(){
+        senha = prompt('Senha: ')
+
+        $.getJSON($SCRIPT_ROOT + '/exclude', {
+          psswd: senha
+        }, function(data) {
+          alert(data.result);
+        });
+        return false;
+    }
+
+</script>
