@@ -9,15 +9,15 @@
     <body class="bg-secondary">
 
         <div id="talk" class='container col-md-6 border rounded bg-white' style="height: auto;">
-            Diga "oi" para o bot :)
+            Diga "Oi" para o bot :)
             <div class="row">
-                <div class="mx-auto col-md-6 border fixed-bottom">
+                <div class="mx-auto col-md-6 border fixed-bottom  bg-white">
                     <form onsubmit="conversation()">
                         <div class="form-group col-md" style="display:inline;">
                             <div class="input-group">
                                 <input type="text" autofocus class="form-control input-lg" id="texto" placeholder="Mensagem...">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="submit" id="submit"><i class="material-icons">send</i></button>
+                                    <button class="btn btn-success" type="submit" id="submit"><i class="material-icons" style="font-size:15px">send</i></button>
                                 </span>
                             </div>
                         </div>
@@ -68,9 +68,10 @@
                 "</div>"+
                 "<!-- FIM Dialog Bot -->"
         );
+
+        $('#texto').focus();
       });
       $('#texto').val('');
-      $('#texto').focus()
       return false;
     }
 
