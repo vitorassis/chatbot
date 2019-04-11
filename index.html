@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bot!</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body class="bg-secondary" style="font-size:20pt">
+
+        <div id="talk" class='container col-md-12 border rounded bg-white' style="height: auto; width: 100wv">
+            Diga "Oi" para o bot :)
+            <div class="row">
+                <div class="mx-auto col-md-12 border fixed-bottom  bg-white">
+                    <form onsubmit="conversation()">
+                        <div class="form-group col-md" style="display:inline;">
+                            <div class="input-group">
+                                <textarea type="text" autofocus class="form-control form-control-lg" id="texto" onkeypress="checaTexto(event)" placeholder="Mensagem..." style="overflow:auto;resize:none"></textarea>
+                                <div class="input-group-btn input-group-append">
+                                    <span class="input-group-text bg-success">
+                                        <button class="btn btn-success form-control-lg" type="submit" id="submit"><i class="material-icons">send</i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </body>
+</html>
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+
+    function conversation(){
+        texto = $('#texto').val()
+        $("#talk").html(
+            $("#talk").html()
+            +
+            "<!-- Dialog Você -->"+
+            "<div class='row'>"+
+                "<div class='col-md-12 d-flex flex-row-reverse'>"+
+                    "<div class='p-2 bg-primary rounded border text-white'>"+
+                        texto+
+                    "</div>"+
+                "</div>"+
+            "</div>"+
+            "<!-- FIM Dialog Você -->"
+        );
+      $.getJSON($SCRIPT_ROOT + '/get_response', {
+        text: texto
+      }, function(data) {
+        $("#talk").html(
+            $("#talk").html()
+            +
+            "<!-- Dialog Bot -->" +
+                "<div class='row'>"+
+                    "<div class='col-md-12 d-flex flex-row'>"+
+                        "<div class='p-2 bg-default rounded border'>"+
+                            data.result+
+                        "</div>"+
+                    "</div>"+
+                "</div>"+
+                "<!-- FIM Dialog Bot -->"
+        );
+
+        $('#texto').focus();
+      });
+      $('#texto').val('');
+      return false;
+    }
+
+function checaTexto(e){
+    if(e.which == 13 && !e.shiftKey) {
+		conversation();
+        e.preventDefault();
+        return false;
+    }
+}
+
+</script>
