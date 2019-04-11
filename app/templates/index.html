@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bot!</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body class="bg-secondary">
+
+        <div id="talk" class='container col-md-6 border rounded bg-white' style="height: auto;">
+            Diga "oi" para o bot :)
+            <div class="row">
+                <div class="mx-auto col-md-6 border fixed-bottom">
+                    <form onsubmit="conversation()">
+                        <div class="form-group col-md" style="display:inline;">
+                            <div class="input-group">
+                                <input type="text" autofocus class="form-control input-lg" id="texto" placeholder="Mensagem...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="submit" id="submit"><i class="material-icons">send</i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </body>
+</html>
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+
+    function conversation(){
+        texto = $('#texto').val()
+        $("#talk").html(
+            $("#talk").html()
+            +
+            "<!-- Dialog Você -->"+
+            "<div class='row'>"+
+                "<div class='col-md-12 d-flex flex-row-reverse'>"+
+                    "<div class='p-2 bg-primary rounded border text-white'>"+
+                        texto+
+                    "</div>"+
+                "</div>"+
+            "</div>"+
+            "<!-- FIM Dialog Você -->"
+        );
+      $.getJSON($SCRIPT_ROOT + '/get_response', {
+        text: texto
+      }, function(data) {
+        $("#talk").html(
+            $("#talk").html()
+            +
+            "<!-- Dialog Bot -->" +
+                "<div class='row'>"+
+                    "<div class='col-md-12 d-flex flex-row'>"+
+                        "<div class='p-2 bg-default rounded border'>"+
+                            data.result+
+                        "</div>"+
+                    "</div>"+
+                "</div>"+
+                "<!-- FIM Dialog Bot -->"
+        );
+      });
+      $('#texto').val('');
+      $('#texto').focus()
+      return false;
+    }
+
+</script>
