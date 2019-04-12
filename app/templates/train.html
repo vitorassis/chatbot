@@ -38,9 +38,17 @@
                 <div class="col-md-6 border rounded">
                     <h3>Limpar aprendizado do bot?</h3>
                     <h6>Essa ação não pode ser desfeita!</h6>
+
                     <div class="row">
                         <div class="col-md-12">
-                            <button id="exclude" class="btn btn-danger" onclick="exclude()">Esquecer</button>
+                            <label>Senha:
+                                <input type="password" id="psswd" onkeypress="checaTexto(event)"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="exclude" class="btn btn-danger" type="submit">Esquecer</button>
                         </div>
                     </div>
             </div>
@@ -66,14 +74,23 @@
     }
 
     function exclude(){
-        senha = prompt('Senha: ')
+        senha = $("#psswd").val()
 
         $.getJSON($SCRIPT_ROOT + '/exclude', {
           psswd: senha
         }, function(data) {
           alert(data.result);
         });
+        $("#psswd").val('')
         return false;
+    }
+
+    function checaTexto(e){
+        if(e.which == 13 && !e.shiftKey) {
+    		exclude()
+            e.preventDefault();
+            return false;
+        }
     }
 
 </script>

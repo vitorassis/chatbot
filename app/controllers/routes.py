@@ -37,4 +37,6 @@ def exclude():
     if psswd == 'zerar':
         os.remove('db.sqlite3')
         ret = 'Memória excluída'
+    else:
+        ret = 'Senha incorreta!     '
     return jsonify(result=ret)
