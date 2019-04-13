@@ -1,1 +1,1 @@
-web: gunicorn -b :$PORT app:run
+web: flask run
