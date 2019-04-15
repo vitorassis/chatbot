@@ -1,7 +1,7 @@
 from app import app
 from flask import Flask, jsonify, render_template, request
 from chatterbot import ChatBot
-from chatterbot.trainers import ListTrainer
+from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
 import os.path
 
 bot = ChatBot('botinho')
@@ -22,7 +22,12 @@ def train():
 
 @app.route('/train_talk')
 def train_talk():
-    talk = request.args.get('talk').split("\n")
+    trainer_corpus = ChatterBotCorpusTrainer(bot)
+    trainer_corpus.train("chatterbot.corpus.portuguese")
+    if request.args.get('talk') != None:
+        talk = request.args.get('talk').split("\n")
+    else:
+        talk = []
     trainer = ListTrainer(bot)
     if not os.path.isfile('db.sqlite3'):
         os.mknod('db.sqlite3')
@@ -36,7 +41,10 @@ def exclude():
         ret = 'Bot já sem memória'
     if psswd == 'zerar':
         os.remove('db.sqlite3')
+        bot = ChatBot('botinho')
+        train_talk()
         ret = 'Memória excluída'
+
     else:
-        ret = 'Senha incorreta!     '
+        ret = 'Senha incorreta!'
     return jsonify(result=ret)
