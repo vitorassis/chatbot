@@ -4,14 +4,13 @@ from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
 import os.path
 
-bot = ChatBot('botinho')
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/get_response')
 def get_response():
+    bot = ChatBot('botinho')
     text = request.args.get('text')
 
     return jsonify(result=str(bot.get_response(text)))
@@ -22,6 +21,7 @@ def train():
 
 @app.route('/train_talk')
 def train_talk():
+    bot = ChatBot('botinho')
     trainer_corpus = ChatterBotCorpusTrainer(bot)
     trainer_corpus.train("chatterbot.corpus.portuguese")
     if request.args.get('talk') != None:
@@ -41,7 +41,6 @@ def exclude():
         ret = 'Bot já sem memória'
     if psswd == 'zerar':
         os.remove('db.sqlite3')
-        bot = ChatBot('botinho')
         train_talk()
         ret = 'Memória excluída'
 
